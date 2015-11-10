@@ -1,0 +1,11 @@
+# stuff from ./download.sh
+/pillar
+/pharo*
+/Pharo.*
+
+# compilation results
+/book-result
+/pillarPostExport.sh
+
+# misc other files
+/auto
