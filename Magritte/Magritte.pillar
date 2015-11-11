@@ -206,7 +206,7 @@ In summary Magritte is really easy to use with Seaside. You put your description
 
 Descriptions, as we have seen in the above examples, are naturally organized in a description hierarchy. A class diagram of the most important descriptions is shown in Figure *description*. Different kinds of descriptions exist: simple type-descriptions that directly map to Pharo classes, and some more advanced descriptions that are used to represent a collection of descriptions, or to model relationships between different entities.
 
-+Description hierarchy.>file://figures/descriptionhierarchy.png|width=80%|label=description.+
++Description hierarchy.>file://figures/descriptionHierarchy.png|width=80%|label=description.+
 
 Descriptions are central to Magritte and are connected to accessors and conditions that we present below. 
 
