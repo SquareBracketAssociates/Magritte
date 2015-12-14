@@ -10,7 +10,7 @@ In this chapter we describe Magritte, its design and how to customize it. Now be
 
 In this section we present the key principles. With such knowledge you can get 80\% of the power of Magritte without knowing all its possible customizations. The key idea behind Magritte is the following: given one object with a set of values, and a description of this information, we will create automatically tools that treat such information and for example automatically create Seaside components. 
 
-Figure *basicPrinciple* shows that a person address', John's address, instance of the class Address, is described by a description object which is attached to the class Address. A program (i.e., database query, generic UI, seaside component builder) will interpret the value of the instance by using its descriptions.
+Figure *@basicPrinciple* shows that a person address', John's address, instance of the class Address, is described by a description object which is attached to the class Address. A program (i.e., database query, generic UI, seaside component builder) will interpret the value of the instance by using its descriptions.
 
 +An object is described by a description which is defined on its class.>file://figures/basicPrinciple.png|width=60%|label=basicPrinciple+
 
@@ -20,17 +20,17 @@ Here are the basic description assumptions:
 
 [[[
 MAAddress>>descriptionStreet
-	<magritteDescription>
-	^ MAStringDescription new
-		accessor: #street;
-		label: 'Street';
-		priority: 10;
-		yourself
+   <magritteDescription>
+   ^ MAStringDescription new
+      accessor: #street;
+      label: 'Street';
+      priority: 10;
+      yourself
 ]]]
 
 Note that there is no need to have a one to one mapping between the instance variables of the class and the associated descriptions.
 
-- All descriptions are automatically collected and put into a container description when sending ==description== to  the object (see Figure *describingAddress*).
+- All descriptions are automatically collected and put into a container description when sending ==description== to  the object (see Figure *@describingAddress*).
 - Descriptions are defined programmatically and can also be queried. They support the collection protocol (==do:==,  ==select:==...).
 
 +Describing an Address.>file://figures/describingAddress.png|width=90%|label=describingAddress+
@@ -55,84 +55,80 @@ You can also use the message ==MAContainer>>asComponentOn:== with aModel to buil
 
 [[[
 ((Address descriptionStreet , Address descriptionPlace) 
-	asComponentOn: anAddress) addValidatedForm 
+   asComponentOn: anAddress) addValidatedForm 
 ]]]
 
 !! First Example
 
-Let us go over a simple but complete example. We want to develop an application to manage person, address and phone number as shown in Figure *addressOur*.
+Let us go over a simple but complete example. We want to develop an application to manage person, address and phone number as shown in Figure *@addressOur*.
 
 +Our address design.>file://figures/address.png|width=60%|label=addressOur+ 
 
 We define a class ==MAAddress== with four instance variables and their corresponding accessors. 
 
 [[[
-Object subclass: #Address
-	instanceVariableNames: 'street place plz canton'
-	classVariableNames: ''
-	category: 'MaAddress'
+Object subclass: #MAAddress
+   instanceVariableNames: 'street place plz canton'
+   classVariableNames: ''
+   category: 'MaAddress'
 ]]]
 
 [[[
 MAAddress class>>example1
-	| address | 
-	address := self new.
-	address plz: 1001.
-	address street: 'Sesame'.
-	address place: 'DreamTown'.
-	address canton: 'Bern'.
-	^ address
+   | address | 
+   address := self new.
+   address plz: 1001.
+   address street: 'Sesame'.
+   address place: 'DreamTown'.
+   address canton: 'Bern'.
+   ^ address
 ]]]
 
 Then we add the descriptions to the ==MAAddress== class as follows: the street name and the place are described by a string description, the PLZ is a number with a range between 1000 and 9999, and since the canton is one of the predefined canton list (our address is for Switzerland so far), we describe it as a single option description.
 
 [[[
 MAAddress>>descriptionStreet
-		<magritteDescription>
-		
-		^ MAStringDescription new
-			accessor: #street;
-			label: 'Street';
-			priority: 10;
-			yourself
+   <magritteDescription>
+   ^ MAStringDescription new
+      accessor: #street;
+      label: 'Street';
+      priority: 10;
+      yourself
 ]]]
 
 [[[
 MAAddress>>descriptionPlz
-		<magritteDescription>
-		
-		^ MANumberDescription new
-			accessor: #plz;
-			label: 'PLZ';
-			priority: 20;
-			min: 1000;
-			max: 9999;
-			yourself
+   <magritteDescription>
+   ^ MANumberDescription new
+      accessor: #plz;
+      label: 'PLZ';
+      priority: 20;
+      min: 1000;
+      max: 9999;
+      yourself
 ]]]
 
 [[[
 MAAddress>>descriptionPlace
-		<magritteDescription>
-	
-		^ MAStringDescription new
-				accessor: #place;
-				label: 'Place';
-				priority: 30;
-				yourself
+   <magritteDescription>
+   ^ MAStringDescription new
+      accessor: #place;
+      label: 'Place';
+      priority: 30;
+      yourself
 ]]]
 
 [[[
 MAAddress>>descriptionCanton
-		<magritteDescription>
-	
-		^ MASingleOptionDescription new
-			options: #( 'Zurich' 'Bern' 'Luzern' 'Uri' 'Schwyz' 'Unterwalden' 'Glarus' 'Zug' 'Freiburg' 'Solothurn' 'Basel' 'Schaffhausen' 'Appenzell' 'St. Gallen' 'Graubunden' 'Aargau' 'Thurgau' 'Ticino' 'Vaud' 'Valais' 'Neuchatel' 'Geneve' 'Jura' );
-			reference: MAStringDescription new;
-			accessor: #canton;
-			label: 'Canton';
-			priority: 40;
-			beSorted;
-			yourself
+   <magritteDescription>
+   ^ MASingleOptionDescription new
+      options: #( 'Zurich' 'Bern' 'Luzern' 'Uri' 'Schwyz' 'Unterwalden' 'Glarus' 'Zug' 'Freiburg' 'Solothurn' 'Basel' 'Schaffhausen' 'Appenzell' 'St. Gallen' 'Graubunden' 'Aargau' 'Thurgau' 'Ticino' 'Vaud' 'Valais' 'Neuchatel' 'Geneve' 'Jura' );
+      reference: MAStringDescription new;
+      accessor: #canton;
+      label: 'Canton';
+      priority: 40;
+      beSorted;
+      yourself
 ]]]
 Now we can start manipulating the descriptions. Inspect the description object of the address object:
 
@@ -148,10 +144,10 @@ Now we can iterate over the descriptions and get the values associated with the 
 | address |
 address := Address example1.
 address description do: [ :description |
-	Transcript
-		show: description label; show: ':'; tab;
-		show: (description toString: (address readUsing: description));
-		cr ]
+   Transcript
+      show: description label; show: ':'; tab;
+      show: (description toString: (address readUsing: description));
+      cr ]
 ]]]
 Executing the second code snippet outputs the following in the Transcript:
 
@@ -166,23 +162,23 @@ Canton:    Bern
 
 [[[
 WAComponent subclass: #MyContactAddress
-	instanceVariableNames: 'addressForm'
-	classVariableNames: ''
-	category: 'MaAddress'
+   instanceVariableNames: 'addressForm'
+   classVariableNames: ''
+   category: 'MaAddress'
 ]]]
 
 [[[
 MyContactAddress>>initialize
-	super initialize.
-	addressForm := Address example1 asComponent
+   super initialize.
+   addressForm := Address example1 asComponent
 ]]]
 
 [[[
 MyContactAddress>>children
-	^ Array with: addressForm
+   ^ Array with: addressForm
 ]]]
 
-The method ==asComponent== sent to the address object automatically builds a Seaside component for us. The resulting editor is displayed in Figure *addressUI*.
+The method ==asComponent== sent to the address object automatically builds a Seaside component for us. The resulting editor is displayed in Figure *@addressUI*.
 
 +Address example1 asComponent.>file://figures/addressUI.png|width=90%|label=addressUI+
 
@@ -190,12 +186,12 @@ To enable validation and add buttons to save and cancel the editing process is a
 
 [[[
 MyContactAddress>>initialize
-	super initialize.
-	addressForm := Address example1 asComponent.
-	addressForm addValidatedForm
+   super initialize.
+   addressForm := Address example1 asComponent.
+   addressForm addValidatedForm
 ]]]
 
-As a result we get a complete address editor, as seen in Figure *addressSaveCancel*.
+As a result we get a complete address editor, as seen in Figure *@addressSaveCancel*.
 
 +Same Magritte generated component with buttons and validation.>file://figures/addressSaveCancel.png|width=90%|label=addressSaveCancel+
 
@@ -204,9 +200,9 @@ In summary Magritte is really easy to use with Seaside. You put your description
 
 !! Descriptions
 
-Descriptions, as we have seen in the above examples, are naturally organized in a description hierarchy. A class diagram of the most important descriptions is shown in Figure *description*. Different kinds of descriptions exist: simple type-descriptions that directly map to Pharo classes, and some more advanced descriptions that are used to represent a collection of descriptions, or to model relationships between different entities.
+Descriptions, as we have seen in the above examples, are naturally organized in a description hierarchy. A class diagram of the most important descriptions is shown in Figure *@description*. Different kinds of descriptions exist: simple type-descriptions that directly map to Pharo classes, and some more advanced descriptions that are used to represent a collection of descriptions, or to model relationships between different entities.
 
-+Description hierarchy.>file://figures/descriptionHierarchy.png|width=80%|label=description.+
++Description hierarchy.>file://figures/descriptionHierarchy.png|width=80%|label=description+
 
 Descriptions are central to Magritte and are connected to accessors and conditions that we present below. 
 
@@ -219,7 +215,7 @@ Descriptions are central to Magritte and are connected to accessors and conditio
 
 !! Exceptions
 
-Since actions on the meta-model can fail. In addition, objects might not match a given meta-model. Finally it is often important to present to the end users readable error messages. Magritte introduces an exception hierarchy which knows about the description, the failure and a human-readable error message as shown in Figure *exceptions*.
+Since actions on the meta-model can fail. In addition, objects might not match a given meta-model. Finally it is often important to present to the end users readable error messages. Magritte introduces an exception hierarchy which knows about the description, the failure and a human-readable error message as shown in Figure *@exceptions*.
 
 +Exceptions.>file://figures/magritte-exceptions.png|width=80%|label=exceptions+
 
@@ -239,20 +235,20 @@ It also allows the mementos to easily test data for validity outside the domain 
 
 [[[
 MAAddress>>descriptionStartDate
-	<magritteDescription>
+   <magritteDescription>
 
-	^ MADateDescription new 
-		accessor: #startDate;
-		label: 'Start Date';
-		addCondition: [ :value | value > Date today ];
-		beRequired;
-		yourself
+   ^ MADateDescription new 
+      accessor: #startDate;
+      label: 'Start Date';
+      addCondition: [ :value | value > Date today ];
+      beRequired;
+      yourself
 ]]]
 
 [[[
 MAAddress>>descriptionEndDate
-	<magritteDescription>
-	
+   <magritteDescription>
+   
     ^ MADateDescription new 
        accessor: #endDate;
         label: 'End Date';
@@ -267,7 +263,7 @@ We need to add a rule to the objects container description like this
 
 [[[
 MAAddress>>descriptionEndDate
-	<magritteDescription>
+   <magritteDescription>
     ^ super descriptionContainer
         addCondition: [ :object |
             (object readUsing: self descriptionEndDate) > 
@@ -280,9 +276,9 @@ This simply intercepts the container after it is built, and adds a multi field v
 
 !! Accessors and Mementos
 
-""Accessors."" In Smalltalk data can be accessed and stored in different ways. Most common data is stored within instance variables and read and written using accessor methods, but sometimes developers choose other strategies, for example to group data within a referenced object, to keep their data stored within a dictionary, or to calculate it dynamically from block closures. Magritte uses a strategy pattern to be able to access the data through a common interface, see Figure *accessors*.
+""Accessors."" In Smalltalk data can be accessed and stored in different ways. Most common data is stored within instance variables and read and written using accessor methods, but sometimes developers choose other strategies, for example to group data within a referenced object, to keep their data stored within a dictionary, or to calculate it dynamically from block closures. Magritte uses a strategy pattern to be able to access the data through a common interface, see Figure *@accessors*.
 
-+Accessors in Magritte.>file://figures/descriptionGlue.png|width=70%|label=accessor+
++Accessors in Magritte.>file://figures/descriptionGlue.png|width=70%|label=accessors+
 
 By far the most commonly used accessor type is the ==SelectorAccessor==. It can be instantiated with two selectors: a zero argument selector to read, and a one argument selector to write. For convenience  it is possible to specify a read selector only, from which the write selector is  inferred automatically. 
 
