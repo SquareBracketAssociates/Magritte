@@ -1,3 +1,6 @@
+This version is running with the new format but only when we copy magically sbabook.
+So I will revert. 
+
 To install
 
 ./download.sh
