@@ -30,7 +30,7 @@ MAAddress>>descriptionStreet
 
 Note that there is no need to have a one to one mapping between the instance variables of the class and the associated descriptions.
 
-- All descriptions are automatically collected and put into a container description when sending ==description== to  the object (see Figure *describingAddress*).
+- All descriptions are automatically collected and put into a container description when sending ==magritteDescription== to  the object (see Figure *describingAddress*).
 - Descriptions are defined programmatically and can also be queried. They support the collection protocol (==do:==,  ==select:==...).
 
 +Describing an Address.>file://figures/describingAddress.png|width=90%|label=describingAddress+
