@@ -139,7 +139,7 @@ Now we can start manipulating the descriptions. Inspect the description object o
 [[[
 | address |
 address := Address example1.
-address description inspect.
+address magritteDescription inspect.
 ]]]
 
 Now we can iterate over the descriptions and get the values associated with the descriptions of our address model:
@@ -147,7 +147,7 @@ Now we can iterate over the descriptions and get the values associated with the 
 [[[
 | address |
 address := Address example1.
-address description do: [ :description |
+address magritteDescription do: [ :description |
 	Transcript
 		show: description label; show: ':'; tab;
 		show: (description toString: (address readUsing: description));
