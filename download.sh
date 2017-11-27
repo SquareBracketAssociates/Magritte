@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+PHARO_VERSION=${PHARO_VERSION:-5.0}
 VM_INSTALL_URL="http://get.pharo.org/vm"
-IMAGE_URL="https://ci.inria.fr/pharo-contribution/job/Pillar/PHARO=40,VERSION=stable,VM=vm/lastSuccessfulBuild/artifact/Pillar.zip"
+IMAGE_URL="https://ci.inria.fr/pharo-contribution/job/Pillar/PHARO=$(echo "${PHARO_VERSION}" | tr -d '.'),VERSION=stable,VM=vm/lastSuccessfulBuild/artifact/Pillar.zip"
+which pharo > /dev/null 2>&1
+PHARO_VM_AVAILABLE=$?
+PHARO_VM=${PHARO_VM:-$(which pharo 2> /dev/null)}
 PHARO_VM=${PHARO_VM:-./pharo}
 
 usage() {
@@ -16,10 +20,12 @@ HELP
 }
 
 get_vm() {
-    if [ -d pharo-vm ]; then
-        rm -rf pharo-vm
+    if [ ! ${PHARO_VM_AVAILABLE} ]; then
+        if [ -d pharo-vm ]; then
+            rm -rf pharo-vm
+        fi
+        wget ${CERTCHECK} --output-document - "$VM_INSTALL_URL" | bash
     fi
-    wget ${CERTCHECK} --output-document - "$VM_INSTALL_URL" | bash
 }
 
 get_image() {
