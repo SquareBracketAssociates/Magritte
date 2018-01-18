@@ -1,3 +1,8 @@
+OBSOLETE Version better use booklet-magritte.
+Kept here during the migration process
+
+
+
 This version is running with the new format but only when we copy magically sbabook.
 So I will revert. 
 
